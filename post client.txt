@@ -1,0 +1,132 @@
+//    //============================================================================================
+//    // From: https://community.particle.io/t/example-android-application-post-get/9355
+//    //============================================================================================
+//    private class PostClient extends AsyncTask<String, Integer, PostResult> {
+//        //Object we'll be using to hold the results of the POST
+//        private PostResult postResult = new PostResult(0, "Nothing to see here");
+//
+//        @Override
+//        protected PostResult doInBackground(String... params) {
+//            Log.i(TAG, "Entering doInBackground()");
+//            try {
+//                //Get the URL to connect to the Particle Cloud
+//                URL url = new URL(params[0]);
+//                //Pass the Auth Token and a the device phone number to the Photon
+//                String param = "access_token=" + Config.ACCESS_TOKEN + "&params=" + params[1];
+//                // Open a connection using HttpURLConnection
+//                HttpsURLConnection con = (HttpsURLConnection) url.openConnection();
+//                //Set parameters of the connection object
+//                con.setReadTimeout(7000);
+//                con.setConnectTimeout(7000);
+//                con.setDoOutput(true);
+//                con.setDoInput(true);
+//                con.setInstanceFollowRedirects(false);
+//                con.setRequestMethod("POST");
+//                con.setFixedLengthStreamingMode(param.getBytes().length);
+//                con.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+//                //Write the parameters to the connection object's output stream
+//                PrintWriter out = new PrintWriter(con.getOutputStream());
+//                out.print(param);
+//                out.close();
+//                // Connect to the service
+//                con.connect();
+//                // Now start reading what came back from the service
+//                BufferedReader in = null;
+//                //Did we get a success result code?
+//                if (con.getResponseCode() != 200) {
+//                    //Then lets grab the error so we can display them on the console
+//                    //and pass them to the onPostExecute function
+//                    in = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+//                    //Write the error to the console
+//                    Log.e(TAG, "POST error: " + in.toString());
+//                    //The populate the post results object with the data
+//                    //so it can be passed to the onPostExecute function
+//                    postResult.setResultCode(ERROR_CODE);
+//                    postResult.setResultMessage(in.toString());
+//                } else {
+//                    //The button was successfully pushed!
+//                    //pull in the results from the POST
+//                    in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+//                    StringBuilder result = new StringBuilder();
+//                    String line;
+//                    while ((line = in.readLine()) != null) {
+//                        result.append(line);
+//                    }
+//                    //Write the results message to the console
+//                    Log.i(TAG, "POST successful: " + result.toString());
+//                    //The populate the post results object with the data
+//                    //so it can be passed to the onPostExecute function
+//                    postResult.setResultCode(SUCCESS_CODE);
+//                    postResult.setResultMessage(result.toString());
+//
+//                    //Parse the JSON string and write each value to the console
+//                    JSONObject reader = new JSONObject(result.toString());
+//                    String sID = reader.getString("id");
+//                    Log.i(TAG, "ID: " + sID);
+//                    String sLastApp = reader.getString("last_app");
+//                    Log.i(TAG, "Last App: " + sLastApp);
+//                    String sConnected = reader.getString("connected");
+//                    Log.i(TAG, "Connected: " + sConnected);
+//                    String sReturnValue = reader.getString("return_value");
+//                    Log.i(TAG, "Return Value: " + sReturnValue);
+//                }
+//            } catch (SocketTimeoutException e) {
+//                Log.e(TAG, "Exception", e);
+//                postResult.setResultCode(ERROR_CODE);
+//                postResult.setResultMessage("The connection timed out, the garage door opener may not be available.");
+//            } catch (Exception e) {
+//                Log.e(TAG, "Exception", e);
+//                //Write the error message to the console
+//                //e.printStackTrace();
+//                //The populate the post results object with the data
+//                //so it can be passed to the onPostExecute function
+//                postResult.setResultCode(ERROR_CODE);
+//                postResult.setResultMessage("The Particle Cloud service returned " + e.getMessage());
+//            }
+//            //We're done here, so set the return value to null and move on
+//            return postResult;
+//        }
+//
+//        protected void onPreExecute() {
+//            //Tell the console what happened.
+//            Log.i(TAG, "Entering onPreExecute()");
+//            //Don't really plan on doing much here.
+//        }
+//
+//        protected void onProgressUpdate(Integer... progress) {
+//            //This should never fire considering how little data is returned
+//            Log.i(TAG, "Entering onProgressUpdate()");
+//        }
+//
+//        protected void onPostExecute(PostResult result) {
+//            int resCode = result.getResultCode();
+//            //Write the results to the console
+//            Log.i(TAG, "Entering onPostExecute()");
+//            Log.i(TAG, "Result code: " + Integer.toString(resCode));
+//            Log.i(TAG, "Result message: " + result.getResultMessage());
+//            //PostExecute is allowed to update the UI, so we can do that here
+//            //So set the default button text on the button
+//            setButtonStatus(R.string.defaultButtonText);
+//
+//            if (resCode < 0) {
+//                // next, tell the user what happened
+//                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+//                alertDialog.setTitle("Photon Garage Door Opener");
+//                alertDialog.setIcon(android.R.drawable.ic_dialog_alert);
+//                alertDialog.setMessage("Error: " + result.getResultMessage());
+//                alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK",
+//                        new DialogInterface.OnClickListener() {
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        });
+//                alertDialog.show();
+//            } else {
+//                //Display a Toast indicating success
+//                CharSequence text = "The button was pushed!";
+//                int duration = Toast.LENGTH_LONG;
+//                Toast.makeText(context, text, duration).show();
+//            }
+//        }
+//
+//    }

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Garage Controller</string>
+    <string name="app_name_long">Garage Door Controller</string>
+    <string name="tag">Garage Door</string>
+    <string name="defaultButtonText">Tap Me!</string>
+    <string name="altButtonText">Pushing button…</string>
+    <string name="noNetButtonText">Network Not Available</string>
+    <string name="introText">This application uses a Particle Photon device to control a garage door opener. Tap the button below to remotely push the garage door opener button.</string>
+    <string name="one_time_code">One-time Code</string>
+</resources>
