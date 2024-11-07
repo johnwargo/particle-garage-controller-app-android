@@ -36,7 +36,7 @@ The app's security is controlled through variables defined in a separate configu
 
 `DEVICE_ID` is the unique identifier for the Particle Photon device you're using for your Garage Controller. You can obtain this ID from the Particle app or from your list of devices listed on the [Particle Cloud](http://particle.io).
 
-The app has a security feature where, by default, app users cannot open the garage door using the app unless they're connected to the home's Wi-Fi network. To identify this network to the app, you have to provide the network's SSID in the `LOCAL_SSID` field in the configuration file. The Android Wi-Fi APIs return the SSID in quotes, so to make this work correctly in the app, you have to provide the quotes as well. That's why a SSID of myssid would be listed in the file as "\"myssid\"", the backslash (\) escapes the following double quote characters.
+The app has a security feature where, by default, app users cannot open the garage door using the app unless they're connected to the home's Wi-Fi network. To identify this network to the app, you have to provide the network's SSID in the `LOCAL_SSID` field in the configuration file. The Android Wi-Fi APIs return the SSID in quotes, so to make this work correctly in the app, you have to provide the quotes as well. That's why a SSID of myssid would be listed in the file as "\"myssid\"", the backslash `\` escapes the following double quote characters.
 
 As a security feature, the app will let certain smartphones open the garage door regardless of whether they're connected to the home's Wi-Fi network. To identify the devices that are exempt from this restriction, add the device(s) phone numbers to the `OVERRIDE_PHONES` array in the configuration file.
 
